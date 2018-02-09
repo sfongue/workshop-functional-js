@@ -20,18 +20,20 @@ let calculateDistanceWithRssi = rssi => {
 
 let transformCheckpoint = (checkpoint) => {
   if (checkpoint) {
+
+    var deep = _.cloneDeep(checkpoint);
     // Get back essential properties
-    checkpoint.serviceData = checkpoint.advertisement.serviceData;
-    checkpoint.serviceUuids = checkpoint.advertisement.serviceUuids;
+    deep.serviceData = deep.advertisement.serviceData;
+    deep.serviceUuids = deep.advertisement.serviceUuids;
     // Transform data about distance
-    checkpoint.distance = calculateDistanceWithRssi(checkpoint.rssi);
+    deep.distance = calculateDistanceWithRssi(deep.rssi);
     // Clean uninteresting properties
-    delete checkpoint.id;
-    delete checkpoint.address;
-    delete checkpoint.addressType;
-    delete checkpoint.advertisement;
-    delete checkpoint.rssi;
-    delete checkpoint.services;
+    delete deep.id;
+    delete deep.address;
+    delete deep.addressType;
+    delete deep.advertisement;
+    delete deep.rssi;
+    delete deep.services;
     // Everything is ok
     return true;
   } else {

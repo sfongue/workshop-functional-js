@@ -26,7 +26,7 @@ describe('Function transformCheckpoint', function() {
       services: null,
       state: 'outofcontrol'
     };
-    expect(transformCheckpoint(input)).to.be.true;
+    expect(transformCheckpoint(input)).equal(true);
   });
 
 });
