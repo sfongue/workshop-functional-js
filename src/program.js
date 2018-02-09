@@ -23,8 +23,8 @@ let transformCheckpoint = (checkpoint) => {
 
     var deep = _.cloneDeep(checkpoint);
     // Get back essential properties
-    deep.serviceData = deep.advertisement.serviceData;
-    deep.serviceUuids = deep.advertisement.serviceUuids;
+    deep.serviceData = checkpoint.advertisement.serviceData;
+    deep.serviceUuids = checkpoint.advertisement.serviceUuids;
     // Transform data about distance
     deep.distance = calculateDistanceWithRssi(deep.rssi);
     // Clean uninteresting properties
@@ -35,7 +35,7 @@ let transformCheckpoint = (checkpoint) => {
     delete deep.rssi;
     delete deep.services;
     // Everything is ok
-    return true;
+    return deep;
   } else {
     return false;
   }
@@ -52,12 +52,17 @@ let showCheckpoint = (checkpoint, index) => {
 };
 
 let run = () => {
-  let checkpoints = checkpointsService.getCheckpoints();
-  for (var i = 0; i < checkpoints.length; i++) {
-    let checkpoint = checkpoints[i];
-    transformCheckpoint(checkpoint);
-    showCheckpoint(checkpoint, i);
-  }
+  // let checkpoints = checkpointsService.getCheckpoints();
+
+  // for (var i = 0; i < checkpoints.length; i++) {
+  //   let checkpoint = checkpoints[i];
+  //   let output_checkpoint = transformCheckpoint(checkpoint);
+  //   showCheckpoint(output_checkpoint, i);  
+  // }
+
+  checkpointsService.getCheckpoints()
+    .map(transformCheckpoint)
+    .forEach(showCheckpoint)
 };
 
 module.exports = {
